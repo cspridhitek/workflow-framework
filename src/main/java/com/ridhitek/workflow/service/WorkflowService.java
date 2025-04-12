@@ -1,4 +1,4 @@
 package com.ridhitek.workflow.service;
 
-public class WorkflowService {
+public interface WorkFlowService {
 }

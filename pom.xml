@@ -44,12 +44,6 @@
 			<version>3.3.3</version>
 		</dependency>
 
-		<!-- Elasticsearch -->
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-data-elasticsearch</artifactId>
-		</dependency>
-
 		<!-- Retry & Resilience -->
 		<dependency>
 			<groupId>org.springframework.retry</groupId>
@@ -69,12 +63,33 @@
 			<version>1.18.30</version>
 			<scope>provided</scope>
 		</dependency>
+		<!--Flyway Dependency-->
+			<dependency>
+				<groupId>org.flywaydb</groupId>
+				<artifactId>flyway-core</artifactId>
+			</dependency>
+			<!-- MySQL support for Flyway -->
+			<dependency>
+			<groupId>org.flywaydb</groupId>
+			<artifactId>flyway-mysql</artifactId>
+			<version>10.14.0</version>
+			</dependency>
+		  <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>8.0.33</version>
+        </dependency>
 
 		<!-- Audit Framework Dependency -->
-		<dependency>
+		<!-- <dependency>
 			<groupId>com.ridhitek.audit</groupId>
 			<artifactId>audit-framework</artifactId>
 			<version>1.0-SNAPSHOT</version>
+		</dependency> -->
+		<dependency>
+			<groupId>jakarta.persistence</groupId>
+			<artifactId>jakarta.persistence-api</artifactId>
+			<version>3.1.0</version>
 		</dependency>
 
 		<!-- Testing -->
@@ -89,18 +104,11 @@
 			<version>5.8.0</version>
 			<scope>test</scope>
 		</dependency>
-<!--		<dependency>-->
-<!--			<groupId>org.junit.jupiter</groupId>-->
-<!--			<artifactId>junit-jupiter-api</artifactId>-->
-<!--			<version>5.10.2</version>-->
-<!--			<scope>test</scope>-->
-<!--		</dependency>-->
-<!--		<dependency>-->
-<!--			<groupId>org.junit.jupiter</groupId>-->
-<!--			<artifactId>junit-jupiter-engine</artifactId>-->
-<!--			<version>5.10.2</version>-->
-<!--			<scope>test</scope>-->
-<!--		</dependency>-->
+		 <dependency>
+             <groupId>org.slf4j</groupId>
+             <artifactId>slf4j-api</artifactId>
+             <version>2.0.16</version>  <!-- Force the latest version -->
+         </dependency>
 	</dependencies>
 
 	<build>
