@@ -13,7 +13,7 @@ import lombok.EqualsAndHashCode;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "groups")
+@Table(name = "group_info")
 public class Group extends BaseAudit implements Serializable {
 
     private static final long serialVersionUID = 1L;

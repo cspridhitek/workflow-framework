@@ -28,5 +28,5 @@ public class UserGroup extends BaseAudit implements Serializable {
 
     @ManyToOne
     @JoinColumn(name = "groups_id", nullable = false)
-    private Group groups;
+    private Group group;
 }

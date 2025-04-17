@@ -10,13 +10,13 @@ public abstract class BaseAudit {
     private LocalDateTime createdAt;
 
     @Column(name = "created_by", updatable = false)
-    private Long createdBy;
+    private Long createdBy = 0L;
 
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
     @Column(name = "updated_by")
-    private Long updatedBy;
+    private Long updatedBy = 0L;
 
     @PrePersist
     protected void onCreate() {
