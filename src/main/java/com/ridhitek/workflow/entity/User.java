@@ -6,7 +6,6 @@ import jakarta.persistence.*;
 import lombok.Data;
 import java.util.UUID;
 
-import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.UuidGenerator;
 
 import lombok.AllArgsConstructor;
@@ -18,7 +17,7 @@ import lombok.EqualsAndHashCode;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "user")
+@Table(name = "users")
 public class User extends BaseAudit implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -28,6 +27,9 @@ public class User extends BaseAudit implements Serializable {
     @Column(name = "id", columnDefinition = "BINARY(16)", updatable = false, nullable = false)
     private UUID id;
     private String username;
+
+    @Column(unique = true, nullable = false)
     private String email;
+
     private String status;
 }

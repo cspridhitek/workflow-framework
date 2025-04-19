@@ -7,11 +7,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.logging.Logger;
 
 @Service
 public class UserServiceImpl implements UserService {
+
+    private static final Logger logger = Logger.getLogger(UserServiceImpl.class.getName());
 
     @Autowired
     private UserRepository userRepository;
@@ -28,20 +32,32 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User createUser(User user) {
+        logger.info("Creating user: " + user.getUsername());
         return userRepository.save(user);
     }
 
     @Override
-    public User updateUser(UUID id, User userDetails) {
-        return userRepository.findById(id).map(user -> {
-            user.setUsername(userDetails.getUsername()); // Example field
-            user.setEmail(userDetails.getEmail()); // Example field
-            return userRepository.save(user);
-        }).orElseThrow(() -> new RuntimeException("User not found"));
+    public User updateUser(UUID id, Map<String, String> userDetails) {
+        User user = userRepository.findById(id).orElseThrow(() -> new RuntimeException("User not found"));
+        if (userDetails.containsKey("username")) {
+            user.setUsername(userDetails.get("username"));
+        }
+        if (userDetails.containsKey("email")) {
+            user.setEmail(userDetails.get("email"));
+        }
+        if (userDetails.containsKey("status")) {
+            user.setStatus(userDetails.get("status"));
+        }
+        return userRepository.save(user);
     }
 
     @Override
-    public void deleteUser(UUID id) {
+    public void deleteUserById(UUID id) {
+        logger.info("Deleting user with ID: " + id);
+        if (!userRepository.existsById(id)) {
+            throw new RuntimeException("User not found");
+        }
         userRepository.deleteById(id);
     }
+
 }
