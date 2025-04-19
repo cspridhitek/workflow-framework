@@ -10,6 +10,9 @@ import com.ridhitek.workflow.entity.UserRole;
 
 public interface UserRoleRepository extends JpaRepository<UserRole, Long> {
     boolean existsByUserAndRole(User user, Role role);
+
     Optional<UserRole> findByUserAndRole(User user, Role role);
-    
+
+    Optional<UserRole> findByUser(User user);
+
 }

@@ -35,7 +35,7 @@ public class GroupServiceImpl implements GroupService {
         Group existingGroup = groupRepository.findById(id).orElse(null);
         if (existingGroup != null) {
             existingGroup.setName(group.getName()); // Assuming Group has a name field
-            // Update other fields as needed
+            existingGroup.setDescription(group.getDescription()); // Assuming Group has a description field
             return groupRepository.save(existingGroup);
         }
         return null;

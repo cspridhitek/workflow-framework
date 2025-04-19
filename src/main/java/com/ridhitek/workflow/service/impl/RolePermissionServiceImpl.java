@@ -8,13 +8,18 @@ import com.ridhitek.workflow.service.RolePermissionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
 public class RolePermissionServiceImpl implements RolePermissionService {
 
+    private final RolePermissionRepository rolePermissionRepository;
+
     @Autowired
-    private RolePermissionRepository rolePermissionRepository;
+    public RolePermissionServiceImpl(RolePermissionRepository rolePermissionRepository) {
+        this.rolePermissionRepository = rolePermissionRepository;
+    }
 
     @Override
     public RolePermission assignPermissionToRole(Long roleId, Long permissionId) {
@@ -47,5 +52,20 @@ public class RolePermissionServiceImpl implements RolePermissionService {
 
         // If the RolePermission exists, delete it
         rolePermission.ifPresent(rolePermissionRepository::delete);
+    }
+
+    @Override
+    public RolePermission createRolePermission(RolePermission rolePermission) {
+        return rolePermissionRepository.save(rolePermission);
+    }
+
+    @Override
+    public void deleteRolePermission(Long id) {
+        rolePermissionRepository.deleteById(id);
+    }
+
+    @Override
+    public List<RolePermission> getAllRolePermissions() {
+        return rolePermissionRepository.findAll();
     }
 }

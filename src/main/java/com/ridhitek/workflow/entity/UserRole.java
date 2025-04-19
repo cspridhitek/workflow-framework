@@ -13,7 +13,9 @@ import lombok.EqualsAndHashCode;
 @AllArgsConstructor // Ensure this annotation is present to generate the required constructor
 @NoArgsConstructor
 @Entity
-@Table(name = "user_role")
+@Table(name = "user_role", uniqueConstraints = {
+        @UniqueConstraint(columnNames = { "user_id", "role_id" })
+})
 public class UserRole extends BaseAudit implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -22,11 +24,11 @@ public class UserRole extends BaseAudit implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "role_id", nullable = false)
     private Role role;
 

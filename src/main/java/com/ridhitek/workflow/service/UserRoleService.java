@@ -2,8 +2,12 @@ package com.ridhitek.workflow.service;
 
 import java.util.UUID;
 
-public interface UserRoleService {
-    public String assignRoleToUser(UUID userId, Long roleId);
+import com.ridhitek.workflow.dto.UserRoleDTO;
 
-    public String deleteUserRole(UUID userId, Long roleId);
+public interface UserRoleService {
+    public void assignRoleToUser(UserRoleDTO userRoleDTO);
+
+    public void updateUserRole(UserRoleDTO userRoleDTO);
+
+    public void deleteUserRole(UUID userId, Long roleId);
 }
