@@ -1,19 +1,20 @@
 package com.ridhitek.workflow.controller;
 
+import java.util.UUID;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.ridhitek.workflow.dto.UserRoleDTO;
 import com.ridhitek.workflow.service.UserRoleService;
 
-import jakarta.validation.Valid;
-
-@RestController("/api/user-roles")
+@RestController()
+@RequestMapping("/api/user-role")
 public class UserRoleController {
     private final UserRoleService userRoleService;
 
@@ -21,33 +22,54 @@ public class UserRoleController {
         this.userRoleService = userRoleService;
     }
 
-    @PostMapping("/assign")
-    public ResponseEntity<?> assignRoleToUser(@RequestBody UserRoleDTO userRoleDTO) {
+    @PostMapping("/assign/{userId}/roles")
+    public ResponseEntity<?> assignRoleToUser(@PathVariable UUID userId, @RequestParam Long roleId) {
         try {
-            userRoleService.assignRoleToUser(userRoleDTO);
+            System.out.println("Assigning role " + roleId + " to user " + userId);
+            userRoleService.assignRoleToUser(userId, roleId);
             return ResponseEntity.ok("Role assigned to user successfully");
         } catch (Exception e) {
             return ResponseEntity.badRequest().body("Error assigning role to user: " + e.getMessage());
         }
     }
 
-    @PatchMapping("/update")
-    public ResponseEntity<?> updateUserRole(@RequestBody @Valid UserRoleDTO userRoleDTO) {
+    @DeleteMapping("/delete/{userId}/roles")
+    public ResponseEntity<?> deleteUserRole(@PathVariable UUID userId, @RequestParam Long roleId) {
         try {
-            userRoleService.updateUserRole(userRoleDTO); // Assuming this method can also handle updates
-            return ResponseEntity.ok("User role updated successfully");
+            userRoleService.deleteUserRole(userId, roleId);
+            return ResponseEntity.ok("Role deleted from user successfully");
         } catch (Exception e) {
-            return ResponseEntity.badRequest().body("Error updating user role: " + e.getMessage());
+            return ResponseEntity.badRequest().body("Error deleting role from user: " + e.getMessage());
         }
     }
 
-    @DeleteMapping("/delete")
-    public ResponseEntity<?> deleteUserRole(@RequestBody @Valid UserRoleDTO userRoleDTO) {
+    // @GetMapping("/get/{userId}/roles")
+    // public ResponseEntity<?> getUserRole(@PathVariable UUID userId) {
+    // try {
+    // return ResponseEntity.ok(userRoleService.getUserRole(userId));
+    // } catch (Exception e) {
+    // return ResponseEntity.badRequest().body("Error fetching user role: " +
+    // e.getMessage());
+    // }
+    // }
+
+    // @GetMapping("/get/roles/{roleId}")
+    // public ResponseEntity<?> getUserByRole(@PathVariable Long roleId) {
+    // try {
+    // return ResponseEntity.ok(userRoleService.getUserByRole(roleId));
+    // } catch (Exception e) {
+    // return ResponseEntity.badRequest().body("Error fetching users by role: " +
+    // e.getMessage());
+    // }
+    // }
+
+    @PutMapping("/update/{userId}/roles")
+    public ResponseEntity<?> updateUserToRole(@PathVariable UUID userId, @RequestParam Long roleId) {
         try {
-            userRoleService.deleteUserRole(userRoleDTO.getUserId(), userRoleDTO.getRoleId());
-            return ResponseEntity.ok("User role deleted successfully");
+            userRoleService.updateUserToRole(userId, roleId);
+            return ResponseEntity.ok("User updated to role successfully");
         } catch (Exception e) {
-            return ResponseEntity.badRequest().body("Error deleting user role: " + e.getMessage());
+            return ResponseEntity.badRequest().body("Error updating user to role: " + e.getMessage());
         }
     }
 }

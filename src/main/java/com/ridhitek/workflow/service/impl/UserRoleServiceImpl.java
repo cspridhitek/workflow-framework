@@ -3,7 +3,6 @@ package com.ridhitek.workflow.service.impl;
 import java.util.Optional;
 import java.util.UUID;
 
-import com.ridhitek.workflow.dto.UserRoleDTO;
 import com.ridhitek.workflow.entity.Role;
 import com.ridhitek.workflow.entity.User;
 import com.ridhitek.workflow.entity.UserRole; // Import the UserRole entity
@@ -11,6 +10,7 @@ import com.ridhitek.workflow.repository.RoleRepository;
 import com.ridhitek.workflow.repository.UserRepository;
 import com.ridhitek.workflow.repository.UserRoleRepository;
 import com.ridhitek.workflow.service.UserRoleService; // Import the missing interface
+
 import org.springframework.stereotype.Service; // Import the Service annotation
 
 @Service
@@ -28,10 +28,9 @@ public class UserRoleServiceImpl implements UserRoleService { // Implement the U
     }
 
     @Override
-    public void assignRoleToUser(UserRoleDTO userRoleDTO) {
-        UUID userId = userRoleDTO.getUserId(); // Assuming you have a method to get the user ID from the DTO
+    public void assignRoleToUser(UUID userId, Long roleId) {
         Optional<User> user = userRepository.findById(userId);
-        Optional<Role> role = roleRepository.findById(userRoleDTO.getRoleId());
+        Optional<Role> role = roleRepository.findById(roleId);
         if (user.isEmpty() || role.isEmpty()) {
             throw new RuntimeException("User or Role not found");
         }
@@ -49,8 +48,8 @@ public class UserRoleServiceImpl implements UserRoleService { // Implement the U
     public void deleteUserRole(UUID userId, Long roleId) {
         User user = userRepository.findById(userId).orElseThrow(() -> new RuntimeException("User not found"));
         Role role = roleRepository.findById(roleId).orElseThrow(() -> new RuntimeException("Role not found"));
-        Optional<UserRole> userRole = userRoleRepository.findByUserAndRole(user, role); // Assuming you have this method
-                                                                                        // in your repository
+
+        Optional<UserRole> userRole = userRoleRepository.findByUserAndRole(user, role);
         userRole.ifPresentOrElse(
                 userRoleRepository::delete,
                 () -> {
@@ -58,32 +57,36 @@ public class UserRoleServiceImpl implements UserRoleService { // Implement the U
                 });
     }
 
+    // @Override
+    // public ResponseEntity<?> getUserRole(UUID userId) {
+    // User user = userRepository.findById(userId).orElseThrow(() -> new
+    // RuntimeException("User not found"));
+    // Optional<UserRole> userRole = userRoleRepository.findByUser(user);
+    // return userRole.map(ResponseEntity::ok).orElseGet(() ->
+    // ResponseEntity.notFound().build());
+    // }
+
+    // @Override
+    // public ResponseEntity<?> getUserByRole(Long roleId) {
+    // Role role = roleRepository.findById(roleId).orElseThrow(() -> new
+    // RuntimeException("Role not found"));
+    // Optional<UserRole> userRole = userRoleRepository.findByRole(role);
+    // return userRole.map(ResponseEntity::ok).orElseGet(() ->
+    // ResponseEntity.notFound().build());
+    // }
+
     @Override
-    public void updateUserRole(UserRoleDTO userRoleDTO) {
-        UUID userId = userRoleDTO.getUserId();
-        Long newRoleId = userRoleDTO.getRoleId();
-
-        // Fetch the user and the new role
-        User user = userRepository.findById(userId)
-                .orElseThrow(() -> new RuntimeException("User not found"));
-        Role newRole = roleRepository.findById(newRoleId)
-                .orElseThrow(() -> new RuntimeException("Role not found"));
-
-        // Check if the user already has the new role
-        boolean roleExists = userRoleRepository.existsByUserAndRole(user, newRole);
-        if (roleExists) {
-            throw new RuntimeException("User already has the specified role");
+    public void updateUserToRole(UUID userId, Long roleId) {
+        User user = userRepository.findById(userId).orElseThrow(() -> new RuntimeException("User not found"));
+        Role role = roleRepository.findById(roleId).orElseThrow(() -> new RuntimeException("Role not found"));
+        System.out.println(user.getId());
+        Optional<UserRole> userRole = userRoleRepository.findByUser(user);
+        if (userRole.isPresent()) {
+            userRole.get().setRole(role);
+            userRoleRepository.save(userRole.get());
+        } else {
+            throw new RuntimeException("User role not found");
         }
-
-        // Fetch the current UserRole and update it
-        Optional<UserRole> currentUserRole = userRoleRepository.findByUser(user);
-        currentUserRole.ifPresentOrElse(
-                userRole -> {
-                    userRole.setRole(newRole);
-                    userRoleRepository.save(userRole);
-                },
-                () -> {
-                    throw new RuntimeException("User does not have an existing role to update");
-                });
     }
+
 }
