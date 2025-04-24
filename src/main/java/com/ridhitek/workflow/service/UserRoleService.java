@@ -9,9 +9,5 @@ public interface UserRoleService {
 
     public void deleteUserRole(UUID userId, Long roleId);
 
-    // public ResponseEntity<?> getUserRole(UUID userId);
-
-    // public ResponseEntity<?> getUserByRole(Long roleId);
-
     public void updateUserToRole(UUID userId, Long roleId);
 }

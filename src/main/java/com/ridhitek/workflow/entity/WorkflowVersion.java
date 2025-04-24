@@ -23,7 +23,7 @@ public class WorkflowVersion extends BaseAudit implements Serializable {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "workflow_id", nullable = false)
+    @JoinColumn(name = "workflow_id", nullable = false,columnDefinition = "BINARY(16)")
     private Workflow workflow;
 
     private String version;
@@ -31,17 +31,5 @@ public class WorkflowVersion extends BaseAudit implements Serializable {
 
     @Column(name = "is_active")
     private Boolean isActive;
-
-    @Column(name = "created_by")
-    private Long createdBy;
-
-    @Column(name = "created_at")
-    private LocalDateTime createdAt;
-
-    @Column(name = "updated_at")
-    private LocalDateTime updatedAt;
-
-    @Column(name = "updated_by")
-    private Long updatedBy;
 
 }
