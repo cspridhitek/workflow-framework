@@ -18,8 +18,7 @@ public class WorkflowTaskType extends BaseAudit implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private String id;
 
     @ManyToOne
     @JoinColumn(name = "step_id", nullable = false)

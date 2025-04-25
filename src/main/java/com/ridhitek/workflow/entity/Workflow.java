@@ -21,7 +21,6 @@ public class Workflow extends BaseAudit implements Serializable {
     @UuidGenerator
     @Column(name = "id", columnDefinition = "BINARY(16)", updatable = false, nullable = false)
     private UUID id;
-
     private String name;
     private String description;
 

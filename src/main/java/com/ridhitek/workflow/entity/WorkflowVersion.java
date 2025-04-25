@@ -1,8 +1,6 @@
 package com.ridhitek.workflow.entity;
 
 import java.io.Serializable;
-import java.time.LocalDateTime;
-
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -19,8 +17,8 @@ public class WorkflowVersion extends BaseAudit implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @GeneratedValue(strategy=GenerationType.AUTO)
+    private Integer id;
 
     @ManyToOne
     @JoinColumn(name = "workflow_id", nullable = false,columnDefinition = "BINARY(16)")
