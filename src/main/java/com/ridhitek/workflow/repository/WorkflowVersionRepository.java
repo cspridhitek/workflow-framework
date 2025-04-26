@@ -14,6 +14,4 @@ public interface WorkflowVersionRepository extends JpaRepository<WorkflowVersion
 
     Optional<WorkflowVersion> findTopByWorkflowIdAndIsActiveTrueOrderByVersionDesc(UUID workflowId);
 
-    @Query("Select max(wv.version) from WorkflowVersion as wv where wv.workflowId=?1 and isActive=true")
-    Optional<WorkflowVersion> findMaxVersionByWorkflowIdAndIsActiveTrue(UUID workflowId);
 }
