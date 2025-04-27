@@ -1,6 +1,7 @@
 package com.ridhitek.workflow.entity;
 
 import java.io.Serializable;
+import java.util.UUID;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -18,7 +19,7 @@ public class WorkflowRule extends BaseAudit implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     @ManyToOne
@@ -32,9 +33,6 @@ public class WorkflowRule extends BaseAudit implements Serializable {
     private Long groupId;
 
     @Column(name = "user_id")
-    private Long userId;
-
-    @Column(name = "condition_json")
-    private String conditionJson;
+    private UUID userId;
 
 }
