@@ -9,30 +9,30 @@ import lombok.NoArgsConstructor;
 
 @Data
 @EqualsAndHashCode(callSuper = false)
-@Entity
 @AllArgsConstructor
 @NoArgsConstructor
+@Entity
 @Table(name = "workflow_condition")
 public class WorkflowCondition extends BaseAudit implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "step_id", nullable = false)
-    private WorkflowStep step;
+    @JoinColumn(name = "workflow_step_id_from", nullable = false)
+    private WorkflowStep stepFrom; // Source step
 
-    @Column(name = "field_name")
-    private String fieldName;
+    @ManyToOne
+    @JoinColumn(name = "workflow_step_id_to", nullable = false)
+    private WorkflowStep stepTo; // Target step
 
-    private String operator;
+    @Column(name = "condition_type")
+    private String conditionType; // E.g., Days > 5, Approval
 
-    @Column(name = "expected_value")
-    private String expectedValue;
+    @Column(name = "condition_value")
+    private String conditionValue; // E.g., Yes, Approved
 
-    @Column(name = "target_step_id")
-    private Long targetStepId;
-
+    // Getters and Setters
 }
