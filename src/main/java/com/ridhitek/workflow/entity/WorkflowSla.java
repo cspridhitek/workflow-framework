@@ -22,13 +22,10 @@ public class WorkflowSla extends BaseAudit implements Serializable {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "step_id", nullable = false)
+    @JoinColumn(name = "workflow_step_id", nullable = false)
     private WorkflowStep step;
 
     @Column(name = "expected_completion_time_mins")
     private Integer expectedCompletionTimeMins;
-
-    @Column(name = "notify_on_violation")
-    private Boolean notifyOnViolation;
 
 }

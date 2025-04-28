@@ -43,7 +43,7 @@ public class WorkflowTaskTypeServiceImpl implements WorkflowTaskTypeService {
 
     @Override
     public WorkflowTaskTypeDTO getByStepId(Long stepId) {
-        WorkflowTaskType taskType = workflowTaskTypeRepository.findByWorkflowStepId(stepId)
+        WorkflowTaskType taskType = workflowTaskTypeRepository.findByStepId(stepId)
                 .orElseThrow(() -> new RuntimeException("Task Type for Step not found"));
         return mapToDTO(taskType);
     }

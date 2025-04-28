@@ -9,5 +9,5 @@ import com.ridhitek.workflow.entity.WorkflowTaskType;
 
 @Repository
 public interface WorkflowTaskTypeRepository extends JpaRepository<WorkflowTaskType, Long> {
-    Optional<WorkflowTaskType> findByWorkflowStepId(Long stepId);
+    Optional<WorkflowTaskType> findByStepId(Long stepId);
 }
